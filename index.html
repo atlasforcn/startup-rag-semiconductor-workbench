@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RAGtimAIze 半導體智慧模組串接平台原型</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="workbench">
+      <header class="top">
+        <div>
+          <p>U-start 114 / RAGtimAIze</p>
+          <h1>半導體知識模組的 RAG 串接工作台</h1>
+        </div>
+        <div class="health">
+          <span>流程健康度</span>
+          <strong id="healthScore">0</strong>
+        </div>
+      </header>
+
+      <section class="grid">
+        <aside class="panel modules">
+          <div class="panel-head">
+            <p>Modules</p>
+            <h2>知識模組</h2>
+          </div>
+          <div id="moduleList" class="module-list"></div>
+        </aside>
+
+        <section class="panel composer">
+          <div class="panel-head">
+            <p>Query lab</p>
+            <h2>問答測試</h2>
+          </div>
+          <textarea id="query" rows="5">良率下降時，如何從製程紀錄與設備警示找出可能原因？</textarea>
+          <div class="toolbar">
+            <button id="runQuery" type="button">執行 RAG 測試</button>
+            <select id="riskMode">
+              <option value="balanced">平衡模式</option>
+              <option value="strict">嚴格引用</option>
+              <option value="fast">快速探索</option>
+            </select>
+          </div>
+          <div id="answer" class="answer"></div>
+        </section>
+
+        <section class="panel tests">
+          <div class="panel-head">
+            <p>Evaluation</p>
+            <h2>驗證案例</h2>
+          </div>
+          <div id="testList" class="test-list"></div>
+        </section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
