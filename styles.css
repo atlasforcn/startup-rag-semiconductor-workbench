@@ -37,7 +37,8 @@ select {
 }
 
 .top,
-.panel {
+.panel,
+.source-panel {
   background: rgba(255, 253, 248, 0.96);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -215,6 +216,31 @@ select {
   border-radius: 8px;
 }
 
+.source-panel {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  margin-top: 14px;
+  padding: 18px;
+}
+
+.source-panel h2 {
+  margin: 6px 0;
+  font-size: 22px;
+}
+
+.source-panel span {
+  color: var(--muted);
+}
+
+.source-panel a {
+  flex: 0 0 auto;
+  color: var(--blue);
+  font-weight: 850;
+  text-decoration: none;
+}
+
 .meter {
   height: 10px;
   overflow: hidden;
@@ -240,7 +266,8 @@ select {
   }
 
   .top,
-  .toolbar {
+  .toolbar,
+  .source-panel {
     display: grid;
   }
 }
