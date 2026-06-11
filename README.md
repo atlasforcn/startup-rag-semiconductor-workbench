@@ -1,5 +1,21 @@
 # RAGtimAIze 半導體智慧模組串接平台原型
 
+## 快速看懂
+
+![startup-rag-semiconductor-workbench 功能截圖](docs/preview.png)
+
+- 線上 Demo：https://atlasforcn.github.io/startup-rag-semiconductor-workbench/
+- 這個原型在做什麼：把 RAGtimAIze 做成半導體智慧模組串接與 RAG 工作台。
+- 特色定位：特色是把文件、模組、查詢、引用與評估集中在半導體工程情境。
+- 操作流程：選擇文件庫與半導體模組 → 提出問題並查看引用來源 → 比較回答品質、延遲與模組串接狀態
+
+<details>
+<summary>展開完整功能流程截圖</summary>
+
+![startup-rag-semiconductor-workbench 完整功能流程截圖](docs/flow.png)
+
+</details>
+
 ## 比賽來源
 
 - 競賽：U-start 創新創業計畫
