@@ -39,7 +39,7 @@
     <!-- repo-snapshot:end -->
     <div class="demo-boundary" role="note">
       <strong>Prototype</strong>
-      <span>靜態互動原型；畫面資料、評分、AI、金流、醫療、法律與安全流程皆為示範，不代表原團隊官方產品或實際服務。</span>
+      <span>靜態互動原型；文件、引用、分數與模型回覆皆為模擬。RAG 結果只能協助工程師查找證據，不可自行判定根因、修改製程參數或下達設備指令。</span>
     </div>
     <main class="workbench">
       <header class="top">
@@ -50,8 +50,32 @@
         <div class="health">
           <span>流程健康度</span>
           <strong id="healthScore">0</strong>
+          <small id="releaseState">尚未通過上線門檻</small>
         </div>
       </header>
+
+      <section class="ops-metrics" aria-label="產品營運摘要">
+        <article>
+          <span>知識版本</span>
+          <strong>FAB-KB 24.06</strong>
+          <small>最近同步 18 分鐘前</small>
+        </article>
+        <article>
+          <span>驗證集</span>
+          <strong id="evaluationCases">36 cases</strong>
+          <small>含 8 筆反例與衝突文件</small>
+        </article>
+        <article>
+          <span>引用覆蓋</span>
+          <strong id="citationCoverage">88%</strong>
+          <small>每項結論需回指來源片段</small>
+        </article>
+        <article>
+          <span>人工複核</span>
+          <strong>100%</strong>
+          <small>高風險建議不可自動執行</small>
+        </article>
+      </section>
 
       <section class="grid">
         <aside class="panel modules">
@@ -70,13 +94,16 @@
           <textarea id="query" rows="5">良率下降時，如何從製程紀錄與設備警示找出可能原因？</textarea>
           <div class="toolbar">
             <button id="runQuery" type="button">執行 RAG 測試</button>
-            <select id="riskMode">
+            <label class="mode-label">
+              <span>回答模式</span>
+              <select id="riskMode">
               <option value="balanced">平衡模式</option>
               <option value="strict">嚴格引用</option>
               <option value="fast">快速探索</option>
-            </select>
+              </select>
+            </label>
           </div>
-          <div id="answer" class="answer"></div>
+          <div id="answer" class="answer" aria-live="polite"></div>
         </section>
 
         <section class="panel tests">
@@ -84,8 +111,55 @@
             <p>Evaluation</p>
             <h2>驗證案例</h2>
           </div>
+          <div class="eval-summary">
+            <span>平均分</span>
+            <strong id="evaluationAverage">87</strong>
+            <small id="evaluationStatus">需補 SOP 模組與反例測試</small>
+          </div>
           <div id="testList" class="test-list"></div>
+          <button id="runEvaluation" class="secondary-button" type="button">重跑 36 筆驗證集</button>
         </section>
+      </section>
+
+      <section class="decision-grid" aria-label="市場、商業模式與上線決策">
+        <article class="decision-panel">
+          <p>Market wedge</p>
+          <h2>先解工程師每天都在做的證據整理</h2>
+          <ul>
+            <li><strong>使用者</strong><span>製程、設備、良率與知識工程團隊</span></li>
+            <li><strong>高頻痛點</strong><span>跨系統查資料、追版本、整理異常證據與交接紀錄</span></li>
+            <li><strong>現有替代</strong><span>全文搜尋、試算表、共享資料夾、資深工程師口頭經驗</span></li>
+            <li><strong>差異化</strong><span>模組化資料連接、逐句引用、衝突提示與部署門檻</span></li>
+          </ul>
+        </article>
+
+        <article class="decision-panel business-panel">
+          <p>Business model</p>
+          <h2>以產線、模組與私有部署收費</h2>
+          <div class="business-metrics">
+            <div><span>付費者</span><strong>晶圓廠 / 設備商</strong></div>
+            <div><span>收費單位</span><strong>導入費＋年授權</strong></div>
+            <div><span>擴張路徑</span><strong>單站點 → 跨廠區</strong></div>
+            <div><span>驗證指標</span><strong>找證據時間 / 誤引率</strong></div>
+          </div>
+          <p class="panel-note">本區是原型商業假設，不代表原團隊實際定價或客戶。</p>
+        </article>
+
+        <article class="decision-panel release-panel">
+          <p>Release gate</p>
+          <h2>模型不能自己決定上線</h2>
+          <div id="releaseChecklist" class="release-checklist"></div>
+          <button id="requestRelease" type="button" disabled>建立人工上線審查</button>
+          <p class="panel-note">通過門檻後也只會建立審查任務，不會直接部署到產線。</p>
+        </article>
+      </section>
+
+      <section class="audit-panel" aria-label="測試與審查紀錄">
+        <div>
+          <p>Audit trail</p>
+          <h2>每次查詢、驗證與決策都留下紀錄</h2>
+        </div>
+        <ol id="auditLog"></ol>
       </section>
 
       <details class="source-panel">
@@ -98,6 +172,7 @@
         </div>
       </details>
     </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="app.js"></script>
   </body>
 </html>
